@@ -3,10 +3,13 @@ package an.maguste.android.rxsample
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,13 +36,21 @@ class MainActivity : AppCompatActivity() {
 
 
         textButton.setOnClickListener{
-            Log.d( TAG, "Button clicked")
             logAndAppend("Button clicked")
-            Toast.makeText(this.baseContext,"Button clicked", Toast.LENGTH_SHORT )
+            Toast.makeText(this,"Button clicked", Toast.LENGTH_SHORT )
         }
 
         val dispose = dataSource()
-                .subscribe { logAndAppend("next int = $it") }
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    logAndAppend("next int = $it")
+                }, {
+                    Log.e(TAG, " error - ${it.localizedMessage}")
+                    logAndAppend("dataSource error")
+                }, {
+
+                })
 
     }
 
