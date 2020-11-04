@@ -32,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        textLog.setOnClickListener{
+        textButton.setOnClickListener{
+            Log.d( TAG, "Button clicked")
             logAndAppend("Button clicked")
             Toast.makeText(this.baseContext,"Button clicked", Toast.LENGTH_SHORT )
         }
-        textLog.performClick()
 
         val dispose = dataSource()
                 .subscribe { logAndAppend("next int = $it") }

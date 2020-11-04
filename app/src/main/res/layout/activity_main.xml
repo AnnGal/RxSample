@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/textButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -15,6 +16,7 @@
         android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_margin="16dp">
+
         <TextView
             android:id="@+id/textLog"
             android:layout_width="match_parent"
